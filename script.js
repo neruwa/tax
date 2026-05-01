@@ -55,7 +55,7 @@ if (region === "一覧") {
   );
 
   for (const d of filtered) {
-    const response = await fetch("./" + item.page.trim());
+    const response = await fetch("./" + d.page.trim());
     const text = await response.text();
 
     output.innerHTML += `
@@ -68,7 +68,6 @@ if (region === "一覧") {
 
   return;
 }
-
   // 通常表示
   const item = data.find(d => d.region === region);
 
