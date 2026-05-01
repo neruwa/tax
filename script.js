@@ -7,30 +7,31 @@ Papa.parse("data.csv", {
 
   complete: function(results) {
 
-    console.log(results.data);
-
     const data = results.data;
 
-    // region列だけ取得
-    const regions = data.map(item => item.region);
-
-    // 重複削除
-    const uniqueRegions = [...new Set(regions)];
-
-    // select取得
     const select = document.getElementById("region");
 
-    // option追加
-    uniqueRegions.forEach(region => {
+    data.forEach(item => {
 
-      if(region){
+      if(item.region){
 
         const option = document.createElement("option");
 
-        option.value = region;
-        option.textContent = region;
+        option.value = item.page;
+        option.textContent = item.region;
 
         select.appendChild(option);
+
+      }
+
+    });
+
+    // 選択時イベント
+    select.addEventListener("change", function() {
+
+      if(this.value){
+
+        window.location.href = this.value;
 
       }
 
