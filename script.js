@@ -1,39 +1,40 @@
-console.log("script動いた");
+let data = {};
 
 Papa.parse("data.csv", {
-
   download: true,
   header: true,
-
   complete: function(results) {
-
-    const data = results.data;
+    results.data.forEach(row => {
+      data[row.region] = row;
+    });
 
     const select = document.getElementById("region");
 
-    data.forEach(item => {
-
-      if(item.region){
-
-        const option = document.createElement("option");
-
-        option.value = item.page;
-        option.textContent = item.region;
-
-        select.appendChild(option);
-
-      }
-
+    Object.keys(data).forEach(region => {
+      const option = document.createElement("option");
+      option.value = region;
+      option.textContent = region;
+      select.appendChild(option);
     });
+  }
+});
 
-    // 選択時イベント
-    select.addEventListener("change", function() {
+function goPage() {
+  const region = document.getElementById("region").value;
+  const output = document.getElementById("output");
 
-      if(this.value){
+  if (!region) {
+    output.innerHTML = "";
+    return;
+  }
 
-        window.location.href = this.value;
+  const item = data[region];
 
-      }
+  output.innerHTML = `
+    <h2>${item.region}</h2>
+    <p>${item.tax}</p>
+  `;
+}
 
     });
 
