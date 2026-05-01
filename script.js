@@ -30,14 +30,13 @@ function goPage() {
 
   const item = data[region];
 
+  if (!item) {
+    output.innerHTML = "データが見つかりません";
+    return;
+  }
+
   output.innerHTML = `
     <h2>${item.region}</h2>
     <p>${item.tax}</p>
   `;
 }
-
-    });
-
-  }
-
-});
