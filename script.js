@@ -73,7 +73,7 @@ if (region === "一覧") {
 
   if (!item) return;
 
-  const response = await fetch(item.page);
+　const response = await fetch("./" + item.page.trim());
   const text = await response.text();
 
   output.innerHTML = `
