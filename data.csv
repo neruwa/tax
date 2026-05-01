@@ -1,4 +1,5 @@
 tax,region,page
+宿泊税,一覧,all
 宿泊税,北海道,pages/hokkaido.html
 宿泊税,青森県,pages/aomori.html
 宿泊税,岩手県,pages/iwate.html
