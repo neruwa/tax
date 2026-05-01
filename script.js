@@ -46,26 +46,28 @@ async function showData() {
   output.innerHTML = "";
 
   // 一覧なら全部表示
-  if (region === "一覧") {
+if (region === "一覧") {
 
-    const filtered = data.filter(
-      d => d.tax === "宿泊税" && d.region !== "一覧"
-    );
+  const tax = document.getElementById("taxSelect").value;
 
-    for (const d of filtered) {
-      const response = await fetch(d.page);
-      const text = await response.text();
+  const filtered = data.filter(
+    d => d.tax === tax && d.region !== "一覧"
+  );
 
-      output.innerHTML += `
-        <div class="box">
-          <h2>${d.region}</h2>
-          ${text}
-        </div>
-      `;
-    }
+  for (const d of filtered) {
+    const response = await fetch(d.page);
+    const text = await response.text();
 
-    return;
+    output.innerHTML += `
+      <div class="box">
+        <h2>${d.region}</h2>
+        ${text}
+      </div>
+    `;
   }
+
+  return;
+}
 
   // 通常表示
   const item = data.find(d => d.region === region);
