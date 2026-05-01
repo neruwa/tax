@@ -40,13 +40,18 @@
   <div class="box">
     【宿泊税】
   </div>
-<select id="region">
+
+ <!---税金選択　-->
+<select id="taxSelect" onchange="updateRegion()">
+  <option value="">税金を選択</option>
+</select>
+ <!---自治体　-->
+
+<select id="regionSelect" onchange="showData()">
   <option value="">自治体を選択</option>
 </select>
 
-<button type="button" onclick="goPage()">表示</button>
-
-<br><br>
+ <!---出力エリア　　　　　-->
 <div id="output" class="box"></div>
 
   
