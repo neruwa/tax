@@ -1,42 +1,55 @@
-let data = {};
+let data = [];
 
+//taxSelect（税の種類を選択）
 Papa.parse("data.csv", {
   download: true,
   header: true,
   complete: function(results) {
-    results.data.forEach(row => {
-      data[row.region] = row;
-    });
+    data = results.data;
 
-    const select = document.getElementById("region");
+    const taxSelect = document.getElementById("taxSelect");
 
-    Object.keys(data).forEach(region => {
+    // tax一覧を重複なしで作る
+    const taxes = [...new Set(data.map(d => d.tax))];
+
+    taxes.forEach(tax => {
       const option = document.createElement("option");
-      option.value = region;
-      option.textContent = region;
-      select.appendChild(option);
+      option.value = tax;
+      option.textContent = tax;
+      taxSelect.appendChild(option);
     });
   }
 });
 
-function goPage() {
-  const region = document.getElementById("region").value;
+//regionSelect（自治体を選択）
+function updateRegion() {
+  const tax = document.getElementById("taxSelect").value;
+  const regionSelect = document.getElementById("regionSelect");
+
+  regionSelect.innerHTML = `<option value="">自治体を選択</option>`;
+
+  const filtered = data.filter(d => d.tax === tax);
+
+  filtered.forEach(d => {
+    const option = document.createElement("option");
+    option.value = d.region;
+    option.textContent = d.region;
+    regionSelect.appendChild(option);
+  });
+}
+
+//output（表示）
+function showData() {
+  const region = document.getElementById("regionSelect").value;
   const output = document.getElementById("output");
 
-  if (!region) {
-    output.innerHTML = "";
-    return;
-  }
+  const item = data.find(d => d.region === region);
 
-  const item = data[region];
-
-  if (!item) {
-    output.innerHTML = "データが見つかりません";
-    return;
-  }
+  if (!item) return;
 
   output.innerHTML = `
     <h2>${item.region}</h2>
-    <p>${item.tax}</p>
+    <p>税区分：${item.tax}</p>
+    <p>リンク：${item.page}</p>
   `;
 }
