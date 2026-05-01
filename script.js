@@ -55,7 +55,7 @@ if (region === "一覧") {
   );
 
   for (const d of filtered) {
-    const response = await fetch(d.page);
+    const response = await fetch("./" + item.page.trim());
     const text = await response.text();
 
     output.innerHTML += `
