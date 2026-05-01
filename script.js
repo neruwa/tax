@@ -39,17 +39,46 @@ function updateRegion() {
 }
 
 //output（表示）
-function showData() {
+async function showData() {
   const region = document.getElementById("regionSelect").value;
   const output = document.getElementById("output");
 
+  output.innerHTML = "";
+
+  // 一覧なら全部表示
+  if (region === "一覧") {
+
+    const filtered = data.filter(
+      d => d.tax === "宿泊税" && d.region !== "一覧"
+    );
+
+    for (const d of filtered) {
+      const response = await fetch(d.page);
+      const text = await response.text();
+
+      output.innerHTML += `
+        <div class="box">
+          <h2>${d.region}</h2>
+          ${text}
+        </div>
+      `;
+    }
+
+    return;
+  }
+
+  // 通常表示
   const item = data.find(d => d.region === region);
 
   if (!item) return;
 
+  const response = await fetch(item.page);
+  const text = await response.text();
+
   output.innerHTML = `
-    <h2>${item.region}</h2>
-    <p>税区分：${item.tax}</p>
-    <p>リンク：${item.page}</p>
+    <div class="box">
+      <h2>${item.region}</h2>
+      ${text}
+    </div>
   `;
 }
