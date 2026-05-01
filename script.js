@@ -1,3 +1,5 @@
+console.log("script動いた");
+
 Papa.parse("data.csv", {
 
   download: true,
